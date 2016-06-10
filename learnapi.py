@@ -1,7 +1,6 @@
 """
 API Wrapper for the learn website
 """
-import requests
 from auth import get_authenticated_session
 from bs4 import BeautifulSoup
 from urllib.parse import parse_qs, urlsplit
@@ -42,12 +41,14 @@ class Section(object):
     def __str__(self):
         return self.name + " (" + self.id + ")"
 
+
 class PDFFile(object):
     def __init__(self, name, learn_id):
         self.name = name
         self.id = learn_id
 
     def download(self, session, filename):
+        """Save PDF file to file"""
         download_url = learn_url + "/mod/resource/view.php"
 
         page = session.get(download_url, params={'id': self.id})
@@ -72,14 +73,12 @@ class PDFFile(object):
             r = session.get(pdf_link)
             f.write(r.content)
 
-        # with open(filename, 'wb') as f:
-        #     r = session.get(pdf_link, stream=True, params={'forcedownload': '1'})
-        #     for chunk in page.iter_content(chunk_size=1024):
-        #         if chunk: # filter out keep-alive new chunks
-        #             f.write(chunk)
-
 
 def login(username=None, password=None):
+    """
+    Login to learn with username and password.
+    :return Requests session object
+        """
     return get_authenticated_session(username, password)
 
 
@@ -107,31 +106,39 @@ def get_sections(session, course):
     :return: Dictionary of sections of given course
     """
     r = session.get(course.link)
-    #text = re.sub(u"&amp;", "NOTHING", r.text)
-    #print(text)
     soup = BeautifulSoup(r.text, 'html.parser')
     sectionblock = soup.find('div', attrs={'data-block': 'menu_site_and_course'})
-    #print(sectionblock.prettify())
     sections = sectionblock.find_all('ul')[1].find_all('li')
 
     section_list = []
 
     for section in sections:
-        #print(section.a.get('title'))
         link = section.a.get('href')
-        #print(link)
-        # id = parse_qs(urlsplit(section.a.get('href'))[3])
+
         id = re.search("(?<=ion\=)([0-9]+)", urlsplit(link)[3])
         section_list.append(Section(section.text, id.group(1)))
-        #print("id", id.group(0))  # TODO; ampersand & is escaped, but is still evaluated
+        # TODO; ampersand & is escaped, but is still evaluated
     return section_list
 
 
 def make_url(course_id, section_id):
-    """http://learn.canterbury.ac.nz/course/view.php?id=1536&section=1"""
+    """
+    Generates url to section based on course id and section id
+    :param course_id: Integer
+    :param section_id: Integer
+    :return: String url
+    """
     return learn_url + "/course/view.php"
 
+
 def get_pdfs(session, course_id, section_id=None):
+    """
+    Scrape all files listed on a page (Doesnt currently filter pdf links)
+    :param session: Requests Session Object
+    :param course_id: Integer
+    :param section_id: Integer
+    :return: List of PDF files (learn resource ID's)
+    """
     r = session.get(learn_url + "/course/view.php", params={'id': course_id, 'section': section_id})
     soup = BeautifulSoup(r.text, 'html.parser')
 
@@ -159,5 +166,3 @@ def get_pdfs(session, course_id, section_id=None):
             pdf_id.append(PDFFile(name, id))
 
     return pdf_id
-
-
