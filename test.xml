@@ -1,0 +1,20 @@
+<Learn directory="learn">
+    <Course matches="SENG201S1" directory="SENG201">
+        <!-- Children blocks will default to folder learn/SENG201/* -->
+        <Section matches="Tutorials" update="1hr">
+            <!-- Section name defualts to its match -->
+            <IncludeFile  filename="%f" >.*</IncludeFile>
+            <!-- Save file to url file name -->
+            <IncludeFile directory="${root_dir}/Solutions/" filename="\(Solns\)(.*)">\(Solns\).*</IncludeFile>
+            <!-- Force directory, will copy all files that match to directory. Filename is found via regex capture.
+             ${root_dir} points to the directory specified in root tag-->
+            <ExcludeFile force="True">Unwanted.*</ExcludeFile>
+            <!-- Exclude files that match, even if falls under include file -->
+        </Section>
+        <Section matches="Lectures">
+            <IncludeFile filename="(.+) \(.*\) *$" update="1w">.*</IncludeFile>
+        </Section>
+    </Course>
+
+
+</Learn>

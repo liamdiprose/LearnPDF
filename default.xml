@@ -1,0 +1,62 @@
+<!-- This is a configuation file that will be something simular to what will automatically generate -->
+<!-- It is designed to be verbose so editing is easy -->
+<Learn directory="learn">
+    <Course matches="SENG201S1" name="SENG201S1">
+
+        <Section matches="Lectures" update="1w">
+
+            <!-- Include all files -->
+            <IncludeFile filename="%f">.*</IncludeFile>
+            <!-- Add files to exclude here -->
+            <ExcludeFile>$^</ExcludeFile>
+
+        </Section>
+
+        <Section matches="T1 Tutorials" update="1w">
+            <!-- Include all files -->
+            <IncludeFile filename="%f">.*</IncludeFile>
+
+            <!-- Add files to exclude here -->
+            <ExcludeFile>$^</ExcludeFile>
+        </Section>
+
+        <Section matches="Exam Information" update="1w">
+            <!-- Include all files -->
+            <IncludeFile filename="%f">.*</IncludeFile>
+
+            <!-- Add files to exclude here -->
+            <ExcludeFile>$^</ExcludeFile>
+        </Section>
+
+    </Course>
+
+    <Course matches="EMTH210" name="EMTH210">
+
+        <Section matches="Term 1 Lectures" update="1w">
+
+            <!-- Include all files -->
+            <IncludeFile filename="%f">.*</IncludeFile>
+            <!-- Add files to exclude here -->
+            <ExcludeFile>$^</ExcludeFile>
+
+        </Section>
+
+        <Section matches="Tutorials" update="1w">
+            <!-- Include all files -->
+            <IncludeFile filename="%f">.*</IncludeFile>
+
+            <!-- Add files to exclude here -->
+            <ExcludeFile>$^</ExcludeFile>
+        </Section>
+
+        <Section matches="Some Math Stuff" update="1w">
+            <!-- Include all files -->
+            <IncludeFile filename="%f">.*</IncludeFile>
+
+            <!-- Add files to exclude here -->
+            <ExcludeFile>$^</ExcludeFile>
+        </Section>
+
+    </Course>
+
+</Learn>

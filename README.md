@@ -1,7 +1,27 @@
 # LearnPDF
 ### Download PDF files off the UC Learn webpage.
 
-Now with 20% less leaked passwords!
+
+-------
+
+### configfile branch
+
+Adding support for more control with what downloads, and how it is managed
+
+If no config file is found (i.e. initial run), then create a full config file.
+
+Each course is a block
+Each Section is a sub block
+
+* Each section has naming rules
+    * Regex data scraping from existing sources
+    * Builtin sources: date, time, etc
+    * naming rules includes folder structure -- absoulute directory from root directory, or relitive (in parent block folder)
+* Each file block has a file descriptor, supports regex to match multiple files
+* 
+
+------
+
 
 ## Why?
 Learn is a great resource, but it often clumbersome to download PDF files. The amount of seperate pages you need to wade through is far to many.
