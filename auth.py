@@ -91,13 +91,17 @@ def session_from_file():
     # TODO: Find method of finding if cookies are still fresh
 
 def get_authenticated_session(username, password):
-    with open('learn.cookies', 'r') as f:
-        if json.load(f)[0] + COOKIE_TIMEOUT > time():
-            logging.info("Fresh cookie was found")
-            return session_from_file()
-        else:
-            logging.info("Stale cookie found, reauthenticating")
-            return get_new_authenticated_session(username, password)
+    try:
+        with open('learn.cookies', 'r') as f:
+            if json.load(f)[0] + COOKIE_TIMEOUT > time():
+                logging.info("Fresh cookie was found")
+                return session_from_file()
+            else:
+                logging.info("Stale cookie found, reauthenticating")
+                return get_new_authenticated_session(username, password)
+    except FileNotFoundError:
+        logging.info("No cookie file found")
+        return get_new_authenticated_session(username, password)
 
 if __name__ == '__main__':
     import getpass

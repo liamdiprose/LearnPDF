@@ -3,7 +3,7 @@ from learnapi import *
 import os
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 
 s = login()
@@ -18,4 +18,4 @@ for course in get_courses(s).values():
 
             filename = filepath + course.shortname + "/" + section.name + "/" + pdf_file.name + ".pdf"
 
-            print("\t\t" + pdf_file.download(s, filename))
+            pdf_file.download(s, filename)

@@ -26,12 +26,12 @@ class Course(object):
 
     @classmethod
     def factory(self, a_tag):
-     link = a_tag.get('href')
-     id = parse_qs(urlsplit(link)[3])['id'][0]
-     shorttitle = a_tag.get('title')
-     longtitle = a_tag.text
-     c = Course(shorttitle, link, id, longtitle)
-     return id, c
+        link = a_tag.get('href')
+        id = parse_qs(urlsplit(link)[3])['id'][0]
+        shorttitle = a_tag.get('title')
+        longtitle = a_tag.text
+        c = Course(shorttitle, link, id, longtitle)
+        return id, c
 
 
 class Section(object):
@@ -50,20 +50,33 @@ class PDFFile(object):
     def download(self, session, filename):
         download_url = learn_url + "/mod/resource/view.php"
 
-        page = session.get(learn_url, params={'id': self.id})
+        page = session.get(download_url, params={'id': self.id})
         soup = BeautifulSoup(page.text, 'html.parser')
-        pdf_area = soup.find('div', id="resourceobject")
-        pdf_link = pdf_area.find('a').get('href')
+        pdf_area = soup.find('section', id="region-main")
 
-        print(pdf_link)
-        r = session.get(pdf_link)
+        if not pdf_area:
+            logging.debug("Link didnt find expected website structure, probally not a PDF link")
+            return # Function is void, just return null and skip file
 
-        os.makedirs(os.path.dirname(filename))
+        pdf_link = pdf_area.find('object').get('data')
+
+        print("\t\t " + self.name)
+
+
+        try:
+            os.makedirs(os.path.dirname(filename))
+        except FileExistsError:
+            pass
 
         with open(filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024):
-                if chunk: # filter out keep-alive new chunks
-                    f.write(chunk)
+            r = session.get(pdf_link)
+            f.write(r.content)
+
+        # with open(filename, 'wb') as f:
+        #     r = session.get(pdf_link, stream=True, params={'forcedownload': '1'})
+        #     for chunk in page.iter_content(chunk_size=1024):
+        #         if chunk: # filter out keep-alive new chunks
+        #             f.write(chunk)
 
 
 def login(username=None, password=None):
