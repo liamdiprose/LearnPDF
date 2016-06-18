@@ -1,17 +1,17 @@
 from learnapi import *
 import os
 import logging
-
-logging.basicConfig(level=logging.INFO)
+import time
+# logging.basicConfig(level=logging.INFO)
 
 s = login()
 
 for course in get_courses(s).values():
-    print(course)
+    print("Course: " + str(course))
     for section in get_sections(s, course):
-        print("\t" + str(section))
+        print("Section: " + str(section))
         for pdf_file in get_pdfs(s, course.id, section.id):
-            filename = "{root_dir}/{course}/{section}/{pdf_name}.pdf".format(
+            filename = "{root_dir}/{course}/{section}/{pdf_name}".format(
                 root_dir="learn/",
                 course=course.shortname,
                 section=section.name,
@@ -19,3 +19,6 @@ for course in get_courses(s).values():
             )
 
             pdf_file.download(s, filename)
+            time.sleep(1)
+
+print("Finished Successfully")
