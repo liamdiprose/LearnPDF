@@ -17,6 +17,7 @@ Python 3 is used in this project, which means you'll need Python 3 installed on 
 Finally, youll need to download this project, 
 
 `git clone https://github.com/liamdiprose/LearnPDF.git`
+[ZIP File](https://github.com/liamdiprose/LearnPDF/archive/master.zip)
 
 ## Usage
 Once you have downloaded the project, move into the root directory, and run the `main.py` script
