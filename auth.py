@@ -38,7 +38,7 @@ def announce_session(session, parameters):
 
 def send_credentials(session, username, password):
     """Initial sending of credidentials"""
-    logging.info("Sending learn credidentals")
+    logging.debug("Sending learn credidentals")
     payload = {'j_username': username, 'j_password': password}
     auth_url = "https://login.canterbury.ac.nz/idp/Authn/UserPassword"
 
@@ -96,7 +96,7 @@ def get_new_authenticated_session(username, password):
 def session_to_file(session):
     """Save a session to file"""
     with open('learn.cookies', 'w') as f:
-        logging.info("Cookies saved to file")
+        logging.debug("Cookies saved to file")
         cookie_dict = requests.utils.dict_from_cookiejar(session.cookies)
         json.dump([int(time()), cookie_dict], f)
 
@@ -121,18 +121,18 @@ def get_authenticated_session(username, password):
     try:
         with open('learn.cookies', 'r') as f:
             if json.load(f)[0] + COOKIE_TIMEOUT > time():
-                logging.info("Fresh cookie was found")
+                logging.debug("Fresh cookie was found")
                 return session_from_file()
             else:
-                logging.info("Stale cookie found, reauthenticating")
+                logging.debug("Stale cookie found, reauthenticating")
                 return get_new_authenticated_session(username, password)
     except FileNotFoundError:
-        logging.info("No cookie file found")
+        logging.debug("No cookie file found")
         return get_new_authenticated_session(username, password)
 
 if __name__ == '__main__':
     import getpass
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     learn_url = "https://learn.canterbury.ac.nz/"
 
     session = get_authenticated_session(username=None, password=None)
