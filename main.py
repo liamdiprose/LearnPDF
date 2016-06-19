@@ -12,7 +12,7 @@ for course in get_courses(s).values():
         print("Section: " + str(section))
         for pdf_file in get_pdfs(s, course.id, section.id):
             filename = "{root_dir}/{course}/{section}/{pdf_name}".format(
-                root_dir="learn/",
+                root_dir="learn",
                 course=course.shortname,
                 section=section.name,
                 pdf_name=pdf_file.name
