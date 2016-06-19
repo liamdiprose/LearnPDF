@@ -13,4 +13,4 @@
 
 4. Extract the ZIP file if necessary.
 
-6. Run `main.py` by running with Python.
+6. Run `main.py` with Python.
