@@ -9,6 +9,8 @@ Learn is a great resource, but it often clumbersome to download PDF files. The a
 And thats why this script exists; to download all the PDFs for you. 
 
 ## How?
+[Windows Instructions](https://github.com/liamdiprose/LearnPDF/blob/master/WindowsInstallation.md)
+
 Python 3 is used in this project, which means you'll need Python 3 installed on your system, along with these modules:
 
 * Requests
