@@ -59,14 +59,17 @@ class LearnFile(object):
 
         title = soup.find('title')
         title = title.text if title else "<Not found>"
-        if not pdf_area:
+        if pdf_area is None:
             # HTML was not found, meaning, the file was already downloaded
             logging.debug("Link didnt find expected website structure on page \"" + title  + "\", (probally not PDF)")
             r = page # Page went striaght to the file, not the the final website
             pdf_link = download_url + "&id=" + str(self.id)
         else:
-            pdf_link = pdf_area.find('object').get('data')
-            if not pdf_link:
+            pdf_object = pdf_area.find('object')
+            if pdf_object is None:
+                return
+            pdf_link = pdf_object.get('data')
+            if pdf_link is None:
                 return
             logging.debug("Starting download for: " + pdf_link)
             r = session.get(pdf_link)
@@ -84,16 +87,14 @@ class LearnFile(object):
             pass
 
         print("[{}] {}".format(file_ext.upper(), self.name))
-        with open(filename + "." + file_ext, 'wb') as f:
-
-
-            data = r.content
-
-            if not data:
-                logging.error("Data was empty")
-
-            f.write(data)
-
+        try:
+            with open(filename + "." + file_ext, 'wb') as f:
+                data = r.content
+                if not data:
+                    logging.error("Data was empty")
+                f.write(data)
+        except FileNotFoundError:
+            print("Whoops file not found :p")
             #
             # while True:
             #     data = r.read(1024)
