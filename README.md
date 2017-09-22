@@ -1,36 +1,57 @@
 # LearnPDF
-### Download PDF files off the UC Learn webpage.
+Download files off Learn from the command line. 
 
-Now with 20% less leaked passwords!
+---
 
-## Why?
-Learn is a great resource, but it often clumbersome to download PDF files. The amount of seperate pages you need to wade through is far to many.
+Learn is a website that University of Canterbury lecturers can share resources with students. It hosts 
 
-And thats why this script exists; to download all the PDFs for you. 
+* Homework
+* Lecture Notes
 
-## How?
-Python 3 is used in this project, which means you'll need Python 3 installed on your system, along with these modules:
+and other helpful resources. 
 
+The problem is that the design sucks. PDF's are opened in small boxes on the webpage, meaning students have to download files to view them in full screen. Download folders get very cluttered this way, causing files to be downloaded multiple times. 
+
+LearnPDF says 'hell no' to the Learn website, instead downloading every file on learn to a local folder. This means students can browse all the resources of learn in the comfort of their own file browser.
+
+
+## Requirements
+
+* Python 3
 * Requests
-* BeauitfulSoup4  
 
-Finally, youll need to download this project, 
+## Installation
 
-`git clone https://github.com/liamdiprose/LearnPDF.git`
+1. Clone 
 
-[ZIP File](https://github.com/liamdiprose/LearnPDF/archive/master.zip)
+```
+git clone https://github.com/liamdiprose/LearnPDF.git
+```
 
 ## Usage
-Once you have downloaded the project, move into the root directory, and run the `main.py` script
+LearnPDF is simple, most people will only have to type `./main.py` to get started. If you have other requirements, they might be listed below (and if they aren't, post an issue!)
 
-`python3 main.py`
+### Running normally
 
-It will prompt you for a username and password, and then will slowly download all the PDF files avaible to you.
+```
+./main.py <directoy>
+```
 
-Your username and password is never stored on the disk, however, a authentication cookie will be saved.
+LearnPDF will prompt you for your login details and download all files to `<directory>`. If you don't specify one, it will default to `learn/`.
 
-## It Broke...
-Yep, itll do that. This is still early in development, and theres alot of cases where the program still breaks. You could be nice and add the problem to the error tracker [here](https://github.com/liamdiprose/LearnPDF/issues).
+### Only one filetype
+```
+./main.py --only pdf,doc,txt
+```
 
-## Suggestions
-Suggestions and Improvements are appreciated, you can suggest in the issue tracker. Or even better, add the improvements yourself, and send a pull request.
+Will only download `*.pdf`, `.doc`, and `.txt` files.
+
+### Ignore certain filetypes
+Sometimes lecturers will post videos on Learn, which are huge. Here's how you would ignore them
+```
+./main.py --ignore mp4,avi,mkv
+```
+
+Will skip `.mp4`, `.avi` and `.mkv` files.
+
+ 
