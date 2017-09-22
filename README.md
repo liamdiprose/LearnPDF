@@ -1,15 +1,6 @@
 # LearnPDF
 Download files off Learn from the command line. 
 
----
-
-Learn is a website that University of Canterbury lecturers can share resources with students. It hosts 
-
-* Homework
-* Lecture Notes
-
-and other helpful resources. 
-
 The problem is that the design sucks. PDF's are opened in small boxes on the webpage, meaning students have to download files to view them in full screen. Download folders get very cluttered this way, causing files to be downloaded multiple times. 
 
 LearnPDF says 'hell no' to the Learn website, instead downloading every file on learn to a local folder. This means students can browse all the resources of learn in the comfort of their own file browser.
