@@ -13,7 +13,7 @@ TOKEN_FILENAME = "./token.json"
 
 
 def pathify(course, section, file, root="."):
-    return os.path.join(root, course, section, file)
+    return os.path.join(root, course.strip(), section.strip(), file.strip())
 
 
 def get_saved_token():
