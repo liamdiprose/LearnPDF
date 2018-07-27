@@ -50,6 +50,11 @@ class Learn(object):
             for file in self.get_course_files(course['id']):
                 file['course_name'] = course['shortname']
                 yield file
+            
+            for file in self.get_course_resources(course['id']):
+                file['course_name'] = course['shortname']
+                yield file
+
 
     def get_course_files(self, courseid):
         """ Sorry """
@@ -69,6 +74,23 @@ class Learn(object):
                                     "filesize": content["filesize"],
                                     "timemodified": content["timemodified"]
                                 }
+
+
+    def get_course_resources(self, courseid):
+        courses = self.make_request("mod_resource_get_resources_by_courses", **{"courseids[0]": courseid})['resources']
+
+        for course in courses:
+            for content in course['contentfiles']:
+                yield {
+                    "url": inject_param(content["fileurl"], token=self.token),
+                    "section_name": course["name"],
+                    "name": content["filename"],
+                    "filename": content["filename"],
+                    "filesize": content["filesize"],
+                    "timemodified": content["timemodified"]
+                }
+
+
 
 def inject_param(url, **kwargs):
     url_parts = list(urlparse.urlparse(url))
