@@ -3,7 +3,6 @@ import urllib.parse as urlparse
 
 class Learn(object):
 
-    TOKEN_URL = "http://learn.canterbury.ac.nz/login/token.php?username={username}&password={password}&service=moodle_mobile_app"
     WWW_ROOT = "http://learn.canterbury.ac.nz/webservice/rest/server.php"
 
     def __init__(self, username=None, password=None, token=None):
@@ -18,7 +17,12 @@ class Learn(object):
     @staticmethod
     def get_token(username, password):
 
-        r = requests.post(Learn.TOKEN_URL.format(username=username, password=password)).json()
+        r = requests.post(
+                "http://learn.canterbury.ac.nz/login/token.php",
+                params={"username": username,
+                    "password": password,
+                    "service": "moodle_mobile_app"
+                    }).json()
 
         if "error" in r:
             raise PermissionError(r['error'])
